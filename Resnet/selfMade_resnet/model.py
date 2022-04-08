@@ -146,7 +146,8 @@ class Resnet(nn.Module):
         if self.include_top:
             x = self.avgpool(x)
             x = torch.flatten(x,1)#将512*1*变成512*1
-            x = self.fc(x)#分类
+            fc = self.fc.to(device=torch.device("cuda:0" if torch.cuda.is_available() else "cpu"))
+            x = fc(x)#分类
 
         return x
 
